@@ -8,7 +8,9 @@ class Settings(BaseSettings):
     langchain_tracing_v2: bool = False
     langchain_api_key: str = ""
 
-    class Config:
-        env_file = ".env"
+    langchain_project: str = "RecruitIQ-Agent"
+    langchain_endpoint: str = "https://api.smith.langchain.com"
+
+    model_config = {"env_file": ".env"}
 
 settings = Settings()

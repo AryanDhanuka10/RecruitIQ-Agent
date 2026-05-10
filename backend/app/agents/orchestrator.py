@@ -62,7 +62,17 @@ def check_confidence(state: AgentState):
     if low_confidence and state.get("retries", 0) < 2:
         print("Agent: Low confidence detected. Retrying scoring...")
         return "retry"
-    return "end"
+    return "generate_report"
+
+def generate_report_node(state: AgentState):
+    print("Agent: Generating reports...")
+    from backend.app.reporting.generator import generate_pdf_report, generate_html_report
+    
+    candidates = state["scored_candidates"]
+    generate_pdf_report(candidates, "data/reports/shortlist_report.pdf")
+    generate_html_report(candidates, "data/reports/shortlist_report.html")
+    
+    return state
 
 # Build Graph
 graph_builder = StateGraph(AgentState)
@@ -70,6 +80,7 @@ graph_builder = StateGraph(AgentState)
 graph_builder.add_node("parse_jd", parse_jd_node)
 graph_builder.add_node("parse_profiles", parse_profiles_node)
 graph_builder.add_node("score_candidates", score_candidates_node)
+graph_builder.add_node("generate_report", generate_report_node)
 
 graph_builder.add_edge("parse_jd", "parse_profiles")
 graph_builder.add_edge("parse_profiles", "score_candidates")
@@ -79,9 +90,10 @@ graph_builder.add_conditional_edges(
     check_confidence,
     {
         "retry": "score_candidates",
-        "end": END
+        "generate_report": "generate_report"
     }
 )
+graph_builder.add_edge("generate_report", END)
 
 graph_builder.set_entry_point("parse_jd")
 orchestrator_app = graph_builder.compile()
