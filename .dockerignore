@@ -1,0 +1,22 @@
+# Git
+.git
+.gitignore
+
+# Frontend
+frontend/
+node_modules/
+
+# Python caching
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Environment files
+.env
+
+# Langchain local db
+.langchain.db
+
+# Documentation/Artifacts
+docs/
+deployment/

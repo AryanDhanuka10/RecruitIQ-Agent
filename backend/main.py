@@ -3,6 +3,7 @@ RecruitIQ Agent — FastAPI entry point
 """
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
@@ -26,6 +27,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+import os
+os.makedirs("data/reports", exist_ok=True)
+app.mount("/api/v1/download", StaticFiles(directory="data/reports"), name="reports")
 
 app.include_router(router, prefix="/api/v1")
 

@@ -33,7 +33,7 @@ def process_shortlist(job_id: str, jd_path: str, resume_paths: List[str]):
             "status": "completed",
             "pdf_url": f"/api/v1/download/{job_id}_shortlist_report.pdf",
             "html_url": f"/api/v1/download/{job_id}_shortlist_report.html",
-            "top_candidates": [c["candidate_id"] for c in result.get("scored_candidates", [])]
+            "top_candidates": result.get("scored_candidates", [])
         }
     except Exception as e:
         jobs[job_id] = {"status": "failed", "error": str(e)}
