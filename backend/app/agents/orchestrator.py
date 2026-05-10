@@ -10,6 +10,7 @@ from backend.app.parsers.resume_parser import parse_resume
 from backend.app.scoring.engine import score_candidate
 
 class AgentState(TypedDict):
+    job_id: str
     jd_text: str
     resume_paths: List[str]
     parsed_jd: Optional[dict]
@@ -18,12 +19,12 @@ class AgentState(TypedDict):
     retries: int
 
 def parse_jd_node(state: AgentState):
-    print("Agent: Parsing JD...")
+    print(f"[{state['job_id']}] Agent: Parsing JD...")
     parsed_jd = parse_jd(state["jd_text"])
     return {"parsed_jd": parsed_jd}
 
 def parse_profiles_node(state: AgentState):
-    print(f"Agent: Parsing {len(state['resume_paths'])} profiles...")
+    print(f"[{state['job_id']}] Agent: Parsing {len(state['resume_paths'])} profiles...")
     parsed_resumes = []
     for path in state["resume_paths"]:
         try:
@@ -31,11 +32,11 @@ def parse_profiles_node(state: AgentState):
             parsed["file_path"] = path
             parsed_resumes.append(parsed)
         except Exception as e:
-            print(f"Error parsing {path}: {e}")
+            print(f"[{state['job_id']}] Error parsing {path}: {e}")
     return {"parsed_resumes": parsed_resumes}
 
 def score_candidates_node(state: AgentState):
-    print("Agent: Scoring candidates...")
+    print(f"[{state['job_id']}] Agent: Scoring candidates...")
     scored = []
     # Keep existing high-confidence scores
     existing_scores = {c["candidate_id"]: c for c in state.get("scored_candidates", []) if c["confidence"] >= 0.6}
@@ -60,17 +61,18 @@ def score_candidates_node(state: AgentState):
 def check_confidence(state: AgentState):
     low_confidence = any(c.get("confidence", 1.0) < 0.6 for c in state["scored_candidates"])
     if low_confidence and state.get("retries", 0) < 2:
-        print("Agent: Low confidence detected. Retrying scoring...")
+        print(f"[{state['job_id']}] Agent: Low confidence detected. Retrying scoring...")
         return "retry"
     return "generate_report"
 
 def generate_report_node(state: AgentState):
-    print("Agent: Generating reports...")
+    print(f"[{state['job_id']}] Agent: Generating reports...")
     from backend.app.reporting.generator import generate_pdf_report, generate_html_report
     
     candidates = state["scored_candidates"]
-    generate_pdf_report(candidates, "data/reports/shortlist_report.pdf")
-    generate_html_report(candidates, "data/reports/shortlist_report.html")
+    job_id = state["job_id"]
+    generate_pdf_report(candidates, f"data/reports/{job_id}_shortlist_report.pdf")
+    generate_html_report(candidates, f"data/reports/{job_id}_shortlist_report.html")
     
     return state
 

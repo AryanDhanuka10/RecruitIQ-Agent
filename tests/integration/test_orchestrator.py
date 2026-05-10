@@ -15,6 +15,7 @@ def test_orchestrator():
     
     # 3. Initial State
     initial_state = {
+        "job_id": "test_job_123",
         "jd_text": jd_text,
         "resume_paths": resume_paths,
         "parsed_jd": None,

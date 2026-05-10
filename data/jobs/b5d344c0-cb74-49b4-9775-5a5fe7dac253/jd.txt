@@ -1,0 +1,6 @@
+Role: Senior ML Engineer
+Required Skills: Python, PyTorch, LangChain, MLflow, Docker, Kubernetes
+Preferred Skills: LlamaIndex, FAISS, RAG pipelines, AWS SageMaker
+Min Experience: 4 years
+Education: B.Tech/M.Tech Computer Science or related
+Domain: AI/ML product development
