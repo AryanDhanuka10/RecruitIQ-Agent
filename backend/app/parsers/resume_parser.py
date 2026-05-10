@@ -15,6 +15,7 @@ class CandidateProfile(BaseModel):
     name: str = Field(description="The candidate's full name")
     skills: List[str] = Field(description="List of all technical and soft skills")
     experience_years: float = Field(description="Total years of professional experience")
+    experience_details: List[str] = Field(description="Details of work experience, including achievements and responsibilities")
     education: str = Field(description="Highest degree or education level obtained")
     projects: List[str] = Field(description="Key projects or roles the candidate has worked on")
 

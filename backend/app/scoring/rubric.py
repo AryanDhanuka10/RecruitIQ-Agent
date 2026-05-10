@@ -21,3 +21,11 @@ class CandidateScore(BaseModel):
     recommendation: str          # HIRE | MAYBE | NO_HIRE
     confidence: float = Field(..., ge=0.0, le=1.0)   # 🆕 novelty: confidence layer
     red_flags: list[str] = []    # 🆕 novelty: surfaced anomalies
+
+WEIGHTS = {
+    "skills_match": 0.30,
+    "experience_relevance": 0.25,
+    "project_portfolio": 0.20,
+    "education_certs": 0.15,
+    "communication_quality": 0.10
+}
