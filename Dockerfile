@@ -13,6 +13,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install uv (fast package manager)
 RUN pip install uv
 
+# Suppress uv hardlink warning on Hugging Face Spaces
+ENV UV_LINK_MODE=copy
+
 # Copy requirements and install
 COPY requirements.txt .
 RUN uv pip install --system --no-cache -r requirements.txt
