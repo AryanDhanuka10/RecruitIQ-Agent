@@ -4,10 +4,8 @@
 # 
 
 #  LLM & AGENT FRAMEWORK 
-anthropic>=0.25.0                    # Claude 3.5 Sonnet
 langchain>=0.2.0
-langchain-anthropic>=0.1.6
-langchain-openai>=0.1.0              # optional fallback
+langchain-groq>=0.1.0                # Groq (Free tier)
 langchain-community>=0.2.0
 langgraph>=0.1.5                     # stateful agent graph
 langchain-core>=0.2.0
