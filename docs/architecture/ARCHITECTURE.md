@@ -11,12 +11,12 @@ HR User
   ▼
 [FastAPI Backend — HuggingFace Spaces Docker]
   │
-  ├── /api/v1/shortlist  ──► JD Parser Agent
+  ├ /api/v1/shortlist  ► JD Parser Agent
   │                          Resume/LinkedIn Parser
   │                          Scoring Engine (LLM + Embeddings)
   │                          Report Generator
   │
-  └── /api/v1/override   ──► Override Logger (HITL)
+  └ /api/v1/override   ► Override Logger (HITL)
 ```
 
 ## Agent Architecture: LangGraph Plan-and-Execute

@@ -53,34 +53,34 @@ DIRS = [
 # FILES WITH STARTER CONTENT
 FILES = {
 
-    # ── ENV TEMPLATE ──────────────────────────
+    #  ENV TEMPLATE 
     ".env.example": """\
-# ─── LLM ────────────────────────────────────
+#  LLM 
 ANTHROPIC_API_KEY=your_anthropic_key_here
 OPENAI_API_KEY=your_openai_key_here          # optional fallback
 
-# ─── EMBEDDINGS ──────────────────────────────
+#  EMBEDDINGS 
 EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2   # local default
 OPENAI_EMBEDDING_MODEL=text-embedding-3-small              # if using OpenAI
 
-# ─── APP ─────────────────────────────────────
+#  APP 
 APP_ENV=development          # development | production
 LOG_LEVEL=INFO
 SECRET_KEY=change_me_in_production
 
-# ─── LINKEDIN (optional) ─────────────────────
+#  LINKEDIN (optional) 
 RAPIDAPI_KEY=your_rapidapi_key_here
 
-# ─── OBSERVABILITY (optional) ────────────────
+#  OBSERVABILITY (optional) 
 LANGCHAIN_TRACING_V2=true
 LANGCHAIN_API_KEY=your_langsmith_key
 LANGCHAIN_PROJECT=recruitiq-agent
 
-# ─── HF SPACES ───────────────────────────────
+#  HF SPACES 
 HF_TOKEN=your_huggingface_token
 """,
 
-    # ── GITIGNORE ─────────────────────────────
+    #  GITIGNORE 
     ".gitignore": """\
 .env
 __pycache__/
@@ -101,7 +101,7 @@ data/outputs/*.json
 .langchain.db
 """,
 
-    # ── BACKEND MAIN ──────────────────────────
+    #  BACKEND MAIN 
     "backend/main.py": """\
 \"\"\"
 RecruitIQ Agent — FastAPI entry point
@@ -131,7 +131,7 @@ def health():
     return {"status": "ok", "service": "RecruitIQ Agent"}
 """,
 
-    # ── API ROUTER STUB ────────────────────────
+    #  API ROUTER STUB 
     "backend/app/api/__init__.py": """\
 from fastapi import APIRouter
 router = APIRouter()
@@ -140,7 +140,7 @@ router = APIRouter()
 # from .routes import shortlist, override, status
 """,
 
-    # ── AGENT STUB ────────────────────────────
+    #  AGENT STUB 
     "backend/app/agents/__init__.py": "# Agent orchestration layer\n",
     "backend/app/agents/orchestrator.py": """\
 \"\"\"
@@ -149,7 +149,7 @@ Master orchestrator — chains: JD Parser → Profile Parser → Scorer → Repo
 # TODO (Day 3): implement LangGraph StateGraph
 """,
 
-    # ── PARSERS STUB ──────────────────────────
+    #  PARSERS STUB 
     "backend/app/parsers/__init__.py": "# Resume & JD parsers\n",
     "backend/app/parsers/jd_parser.py": """\
 \"\"\"
@@ -171,7 +171,7 @@ LinkedIn Profile Parser — accepts RapidAPI JSON or manually exported JSON.
 # TODO (Day 2)
 """,
 
-    # ── SCORING STUB ──────────────────────────
+    #  SCORING STUB 
     "backend/app/scoring/__init__.py": "# Scoring engine\n",
     "backend/app/scoring/rubric.py": """\
 \"\"\"
@@ -206,13 +206,13 @@ Scoring engine — LLM + embedding similarity hybrid scoring.
 # TODO (Day 3)
 """,
 
-    # ── REPORTING STUB ────────────────────────
+    #  REPORTING STUB 
     "backend/app/reporting/__init__.py": "# Report generators\n",
     "backend/app/reporting/pdf_report.py": "# TODO (Day 4): ReportLab PDF shortlist report\n",
     "backend/app/reporting/html_report.py": "# TODO (Day 4): Jinja2 HTML report\n",
     "backend/app/reporting/json_report.py": "# TODO (Day 4): JSON output for frontend\n",
 
-    # ── SECURITY ──────────────────────────────
+    #  SECURITY 
     "backend/app/security/__init__.py": "# Security utilities\n",
     "backend/app/security/sanitizer.py": """\
 \"\"\"
@@ -245,7 +245,7 @@ Uses Presidio Analyzer (offline, no external call).
 # from presidio_anonymizer import AnonymizerEngine
 """,
 
-    # ── MEMORY / CACHE ────────────────────────
+    #  MEMORY / CACHE 
     "backend/app/memory/__init__.py": "# LangChain SQLite cache + override log\n",
     "backend/app/memory/cache.py": """\
 \"\"\"
@@ -277,7 +277,7 @@ def log_override(candidate_id: str, dimension: str, old_score: float,
         f.write(json.dumps(entry) + \"\\n\")
 """,
 
-    # ── UTILS ─────────────────────────────────
+    #  UTILS 
     "backend/app/utils/__init__.py": "",
     "backend/app/utils/config.py": """\
 from pydantic_settings import BaseSettings
@@ -297,7 +297,7 @@ class Settings(BaseSettings):
 settings = Settings()
 """,
 
-    # ── TESTS ─────────────────────────────────
+    #  TESTS 
     "tests/__init__.py": "",
     "tests/unit/__init__.py": "",
     "tests/unit/test_sanitizer.py": """\
@@ -326,7 +326,7 @@ def test_score_out_of_range():
 """,
     "tests/integration/__init__.py": "",
 
-    # ── DEPLOYMENT ────────────────────────────
+    #  DEPLOYMENT 
     "deployment/huggingface/Dockerfile": """\
 FROM python:3.11-slim
 
@@ -361,7 +361,7 @@ AI-powered HR shortlisting agent. See main repo README for full docs.
 }
 """,
 
-    # ── DOCS ──────────────────────────────────
+    #  DOCS 
     "docs/prompts/jd_parser_prompt.md": """\
 # JD Parser — System Prompt v1
 
@@ -410,12 +410,12 @@ HR User
   ▼
 [FastAPI Backend — HuggingFace Spaces Docker]
   │
-  ├── /api/v1/shortlist  ──► JD Parser Agent
+  ├ /api/v1/shortlist  ► JD Parser Agent
   │                          Resume/LinkedIn Parser
   │                          Scoring Engine (LLM + Embeddings)
   │                          Report Generator
   │
-  └── /api/v1/override   ──► Override Logger (HITL)
+  └ /api/v1/override   ► Override Logger (HITL)
 ```
 
 ## Agent Architecture: LangGraph Plan-and-Execute
@@ -424,7 +424,7 @@ Nodes: parse_jd → parse_profiles → score_candidates → generate_report
 Edge: conditional retry on low-confidence scores (< 0.6)
 """,
 
-    # ── SAMPLE DATA ───────────────────────────
+    #  SAMPLE DATA 
     "data/sample_jds/senior_ml_engineer.txt": """\
 Role: Senior ML Engineer
 Required Skills: Python, PyTorch, LangChain, MLflow, Docker, Kubernetes
@@ -434,7 +434,7 @@ Education: B.Tech/M.Tech Computer Science or related
 Domain: AI/ML product development
 """,
 
-    # ── README ────────────────────────────────
+    #  README 
     "README.md": """\
 # 🎯 RecruitIQ Agent
 
