@@ -2,7 +2,7 @@ import os
 import uuid
 import json
 from fastapi import APIRouter, UploadFile, File, BackgroundTasks, HTTPException
-from typing import List
+from typing import List, Annotated
 from pydantic import BaseModel
 from backend.app.agents.orchestrator import orchestrator_app
 
@@ -41,8 +41,8 @@ def process_shortlist(job_id: str, jd_path: str, resume_paths: List[str]):
 @router.post("/shortlist")
 async def create_shortlist(
     background_tasks: BackgroundTasks,
-    jd_file: UploadFile = File(...),
-    resume_files: List[UploadFile] = File(...)
+    jd_file: UploadFile = File(..., description="Job Description (.txt)"),
+    resume_files: List[UploadFile] = File(..., description="Candidate resumes (.pdf/.docx)"),
 ):
     job_id = str(uuid.uuid4())
     job_dir = f"data/jobs/{job_id}"

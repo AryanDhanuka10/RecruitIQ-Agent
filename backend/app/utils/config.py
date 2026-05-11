@@ -11,6 +11,6 @@ class Settings(BaseSettings):
     langchain_project: str = "RecruitIQ-Agent"
     langchain_endpoint: str = "https://api.smith.langchain.com"
 
-    model_config = {"env_file": ".env"}
+    model_config = {"env_file": ".env", "extra": "ignore"}
 
 settings = Settings()
