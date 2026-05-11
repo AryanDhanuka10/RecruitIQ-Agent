@@ -10,7 +10,7 @@
     <img src="https://img.shields.io/badge/Groq-000000?style=for-the-badge&logo=groq" alt="Groq" />
   </p>
 
-  <h3><a href="https://recruit-iq-agent-kjbc-git-main-aryandhanuka10s-projects.vercel.app/">🌐 View Live Demo</a></h3>
+  <h3><a href="https://recruit-iq-agent.vercel.app/">🌐 View Live Demo</a></h3>
 </div>
 
 ---
